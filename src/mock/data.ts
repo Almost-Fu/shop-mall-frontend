@@ -10,7 +10,10 @@ import type { Category, Product, Order, AdminUser, UserInfo } from '@/types'
 export const mockCategories: Category[] = [
   { id: 1, name: '手机数码' },
   { id: 2, name: '电脑办公' },
-  { id: 3, name: '智能穿戴' }
+  { id: 3, name: '智能穿戴' },
+  { id: 4, name: '家居生活' },
+  { id: 5, name: '食品饮料' },
+  { id: 6, name: '图书文娱' }
 ]
 
 /** 商品列表（cover 用 emoji 占位，避免依赖外部图片） */
@@ -26,7 +29,25 @@ export const mockProducts: Product[] = [
   { id: 9, name: '便携蓝牙音箱', price: 299, originalPrice: 399, cover: '🔊', categoryId: 1, categoryName: '手机数码', stock: 180, sales: 5600, description: 'IPX7 防水，户外随身。' },
   { id: 10, name: '智能路由器 AX6', price: 349, originalPrice: 429, cover: '📡', categoryId: 1, categoryName: '手机数码', stock: 90, sales: 3100, description: 'WiFi6，信号强劲穿墙。' },
   { id: 11, name: '运动相机 4K', price: 1599, originalPrice: 1899, cover: '📷', categoryId: 3, categoryName: '智能穿戴', stock: 70, sales: 640, description: '防抖拍摄，裸机防水。' },
-  { id: 12, name: '快充充电宝 20000mAh', price: 159, originalPrice: 199, cover: '🔋', categoryId: 1, categoryName: '手机数码', stock: 500, sales: 15000, description: '22.5W 双向快充，可上飞机。' }
+  { id: 12, name: '快充充电宝 20000mAh', price: 159, originalPrice: 199, cover: '🔋', categoryId: 1, categoryName: '手机数码', stock: 500, sales: 15000, description: '22.5W 双向快充，可上飞机。' },
+  { id: 13, name: '家用投影仪', price: 2999, originalPrice: 3499, cover: '🎥', categoryId: 1, categoryName: '手机数码', stock: 50, sales: 880, description: '1080P 高清，自动对焦，家庭影院。' },
+  { id: 14, name: '移动硬盘 2TB', price: 599, originalPrice: 699, cover: '💾', categoryId: 2, categoryName: '电脑办公', stock: 150, sales: 2600, description: '高速传输，便携存储。' },
+  { id: 15, name: '无线打印机', price: 899, originalPrice: 1099, cover: '🖨️', categoryId: 2, categoryName: '电脑办公', stock: 40, sales: 430, description: '支持手机打印，家用办公两相宜。' },
+  { id: 16, name: '雷电扩展坞', price: 499, originalPrice: 599, cover: '🔌', categoryId: 2, categoryName: '电脑办公', stock: 90, sales: 1200, description: '多接口扩展，Type-C 一线连。' },
+  { id: 17, name: '智能眼镜', price: 1999, originalPrice: 2299, cover: '🕶️', categoryId: 3, categoryName: '智能穿戴', stock: 30, sales: 210, description: '听歌导航，轻巧无感。' },
+  { id: 18, name: '骨传导运动耳机', price: 399, originalPrice: 499, cover: '🎧', categoryId: 3, categoryName: '智能穿戴', stock: 200, sales: 1800, description: '不入耳，运动更安全。' },
+  { id: 19, name: '懒人沙发', price: 899, originalPrice: 1299, cover: '🛋️', categoryId: 4, categoryName: '家居生活', stock: 60, sales: 750, description: '云感舒适，久坐不累。' },
+  { id: 20, name: '记忆棉枕头', price: 199, originalPrice: 299, cover: '🛏️', categoryId: 4, categoryName: '家居生活', stock: 300, sales: 3200, description: '慢回弹，护颈助眠。' },
+  { id: 21, name: '智能台灯', price: 299, originalPrice: 399, cover: '💡', categoryId: 4, categoryName: '家居生活', stock: 150, sales: 2100, description: '无级调光，护眼阅读。' },
+  { id: 22, name: '扫地机器人', price: 1999, originalPrice: 2599, cover: '🧹', categoryId: 4, categoryName: '家居生活', stock: 45, sales: 560, description: '激光导航，自动回充。' },
+  { id: 23, name: '空气净化器', price: 1299, originalPrice: 1599, cover: '🧺', categoryId: 4, categoryName: '家居生活', stock: 35, sales: 320, description: '除醛除菌，静音运行。' },
+  { id: 24, name: '多功能料理锅', price: 499, originalPrice: 599, cover: '🍳', categoryId: 4, categoryName: '家居生活', stock: 80, sales: 980, description: '煎炒蒸煮一锅多用。' },
+  { id: 25, name: '巧克力礼盒', price: 128, originalPrice: 168, cover: '🍫', categoryId: 5, categoryName: '食品饮料', stock: 500, sales: 6800, description: '丝滑浓郁，送礼佳品。' },
+  { id: 26, name: '精品咖啡豆', price: 98, originalPrice: 128, cover: '☕', categoryId: 5, categoryName: '食品饮料', stock: 400, sales: 4200, description: '现磨香醇，回味悠长。' },
+  { id: 27, name: '高山绿茶礼盒', price: 188, originalPrice: 238, cover: '🍵', categoryId: 5, categoryName: '食品饮料', stock: 300, sales: 1500, description: '明前嫩芽，清香鲜爽。' },
+  { id: 28, name: '气泡水整箱', price: 59, originalPrice: 79, cover: '🥤', categoryId: 5, categoryName: '食品饮料', stock: 800, sales: 12000, description: '0糖0脂，清爽解腻。' },
+  { id: 29, name: '前端开发实战书', price: 79, originalPrice: 99, cover: '📚', categoryId: 6, categoryName: '图书文娱', stock: 200, sales: 2600, description: 'Vue3+TS 实战教程。' },
+  { id: 30, name: '无线游戏手柄', price: 299, originalPrice: 399, cover: '🎮', categoryId: 6, categoryName: '图书文娱', stock: 150, sales: 1900, description: '多平台兼容，手感舒适。' }
 ]
 
 /** 后台用户列表 */
