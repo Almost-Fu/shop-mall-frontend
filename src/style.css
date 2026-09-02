@@ -1,0 +1,47 @@
+:root {
+  /* 品牌色 */
+  --brand: #6366f1;
+  --brand-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --brand-gradient-2: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  /* 卡片 */
+  --card-radius: 14px;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --card-shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  font-family: 'Microsoft YaHei', 'PingFang SC', -apple-system, Arial, sans-serif;
+  color: #1f2937;
+  background: #f5f6fa;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 通用容器 */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ===== 商品封面渐变色组（emoji + 渐变背景） ===== */
+.cover-grad-0 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.cover-grad-1 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.cover-grad-2 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.cover-grad-3 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+.cover-grad-4 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+.cover-grad-5 { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+
