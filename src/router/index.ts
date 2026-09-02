@@ -91,7 +91,7 @@ const router = createRouter({
  * 全局前置守卫：角色鉴权
  * - 需要登录的页面（购物车）：未登录跳转登录页
  * - 后台页面：必须是 admin 角色，普通 user 拦截
- * 注意：这里只做"路由级"权限判断，账号密码校验在 mock 接口层。
+ * 注意：这里只做"路由级"权限判断，账号密码校验在后端接口层。
  */
 router.beforeEach((to) => {
   const userStore = useUserStore()

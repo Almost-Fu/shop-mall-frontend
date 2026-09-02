@@ -71,9 +71,11 @@
 import { computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useCartStore } from '@/stores/cart'
+import { useUserStore } from '@/stores/user'
 import { createOrder } from '@/api/order'
 
 const cartStore = useCartStore()
+const userStore = useUserStore()
 
 const allChecked = computed(
   () => cartStore.items.length > 0 && cartStore.items.every((i) => i.checked)
@@ -90,7 +92,8 @@ async function checkout() {
     return
   }
   await createOrder({
-    username: 'user',
+    // 使用当前登录用户的账号，而非写死
+    username: userStore.userInfo?.username || 'guest',
     items: cartStore.checkedItems.map((i) => ({
       name: i.name,
       price: i.price,

@@ -4,7 +4,7 @@ import type { LoginParams, UserInfo, Role } from '@/types'
 
 /**
  * 用户状态：登录信息、角色
- * 说明：账号密码校验逻辑在 mock 接口层，这里只保存登录结果，不写死任何账号判断。
+ * 说明：账号密码校验逻辑在后端，这里只保存登录结果，不写死任何账号判断。
  */
 export const useUserStore = defineStore('user', {
   state: () => ({
