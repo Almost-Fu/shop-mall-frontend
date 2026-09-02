@@ -1,22 +1,16 @@
 import axios, { type AxiosResponse, type AxiosRequestConfig } from 'axios'
 import { ElMessage } from 'element-plus'
 import type { ApiResult } from '@/types'
-import { mockAdapter } from '@/mock'
 
 /**
  * 统一 axios 实例
  * - baseURL 从环境变量读取（业务组件禁止硬编码接口地址）
- * - VITE_USE_MOCK=true 时使用 Mock 适配器，false 时走真实后端
+ * - 直接请求真实后端，返回 { code, message, data } 结构
  */
 const service = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000
 })
-
-// 启用 Mock 时挂载自定义适配器
-if (import.meta.env.VITE_USE_MOCK === 'true') {
-  service.defaults.adapter = mockAdapter
-}
 
 // ===== 请求拦截器：自动携带 token =====
 service.interceptors.request.use((config) => {
