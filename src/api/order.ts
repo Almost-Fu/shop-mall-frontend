@@ -18,3 +18,12 @@ export function createOrder(data: Omit<Order, 'id' | 'orderNo' | 'createTime' | 
     data
   })
 }
+
+/** 更新订单状态（发货/完成/取消） */
+export function updateOrderStatus(id: number, status: string): Promise<Order> {
+  return request<Order>({
+    url: `/orders/${id}/status`,
+    method: 'put',
+    data: { status }
+  })
+}

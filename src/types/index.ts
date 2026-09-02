@@ -104,3 +104,16 @@ export interface ApiResult<T> {
   message: string
   data: T
 }
+
+/** 商品新增/编辑表单 */
+export interface ProductForm {
+  name: string
+  price: number
+  originalPrice?: number
+  cover: string
+  categoryId: number
+  categoryName: string
+  stock: number
+  sales: number
+  description: string
+}
