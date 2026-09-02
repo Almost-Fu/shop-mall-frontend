@@ -17,7 +17,8 @@
         <el-table-column label="商品">
           <template #default="{ row }">
             <div class="goods-cell">
-              <span class="cover">{{ row.cover }}</span>
+              <img v-if="row.image" :src="row.image" :alt="row.name" class="cover-img" />
+              <span v-else class="cover">{{ row.cover }}</span>
               <span>{{ row.name }}</span>
             </div>
           </template>
@@ -129,6 +130,12 @@ async function checkout() {
   align-items: center;
   justify-content: center;
   background: #f1f2f6;
+  border-radius: 10px;
+}
+.cover-img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
   border-radius: 10px;
 }
 .footer {

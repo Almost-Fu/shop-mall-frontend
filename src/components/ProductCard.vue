@@ -1,7 +1,13 @@
 <template>
   <div class="product-card" @click="goDetail">
     <div class="cover" :class="coverClass">
-      <span class="emoji">{{ product.cover }}</span>
+      <img
+        v-if="product.image"
+        :src="product.image"
+        :alt="product.name"
+        class="cover-img"
+      />
+      <span v-else class="emoji">{{ product.cover }}</span>
       <span v-if="product.originalPrice" class="badge">特惠</span>
     </div>
     <div class="info">
@@ -53,6 +59,16 @@ function goDetail() {
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden;
+}
+.cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+.product-card:hover .cover-img {
+  transform: scale(1.08);
 }
 .emoji {
   font-size: 72px;

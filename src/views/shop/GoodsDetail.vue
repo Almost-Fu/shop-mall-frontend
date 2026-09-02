@@ -3,7 +3,13 @@
     <el-card v-if="product" class="card" shadow="never">
       <div class="detail-body">
         <div class="cover" :class="coverClass">
-          <span class="emoji">{{ product.cover }}</span>
+          <img
+            v-if="product.image"
+            :src="product.image"
+            :alt="product.name"
+            class="cover-img"
+          />
+          <span v-else class="emoji">{{ product.cover }}</span>
         </div>
         <div class="info">
           <h2 class="name">{{ product.name }}</h2>
@@ -81,6 +87,12 @@ function addCart() {
   justify-content: center;
   border-radius: 14px;
   box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+.cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .emoji {
   font-size: 120px;

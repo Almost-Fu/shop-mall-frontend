@@ -21,6 +21,7 @@ export interface Product {
   stock: number
   sales: number
   description: string
+  image?: string
 }
 
 /** 商品查询参数 */
@@ -116,4 +117,5 @@ export interface ProductForm {
   stock: number
   sales: number
   description: string
+  image: string
 }

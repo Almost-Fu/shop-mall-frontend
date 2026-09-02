@@ -74,7 +74,10 @@
           <el-input-number v-model="form.originalPrice" :min="0" :precision="2" />
         </el-form-item>
         <el-form-item label="封面">
-          <el-input v-model="form.cover" placeholder="输入 emoji，如 📦" />
+          <el-input v-model="form.cover" placeholder="输入 emoji，如 📦（图片加载失败时显示）" />
+        </el-form-item>
+        <el-form-item label="图片URL" required>
+          <el-input v-model="form.image" placeholder="https://...（商品图片地址，必填）" />
         </el-form-item>
         <el-form-item label="库存">
           <el-input-number v-model="form.stock" :min="0" />
@@ -128,7 +131,8 @@ const emptyForm: ProductForm = {
   categoryName: '',
   stock: 0,
   sales: 0,
-  description: ''
+  description: '',
+  image: ''
 }
 const form = reactive<ProductForm>({ ...emptyForm })
 
@@ -171,7 +175,8 @@ function openEdit(row: Product) {
     categoryName: row.categoryName,
     stock: row.stock,
     sales: row.sales,
-    description: row.description
+    description: row.description,
+    image: row.image || ''
   })
   dialogVisible.value = true
 }
@@ -184,6 +189,10 @@ function handleCategoryChange(categoryId: number) {
 async function submit() {
   if (!form.name || !form.categoryId) {
     ElMessage.warning('请填写商品名称并选择分类')
+    return
+  }
+  if (!form.image.trim()) {
+    ElMessage.warning('请填写商品图片 URL')
     return
   }
   submitting.value = true
