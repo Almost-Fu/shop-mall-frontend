@@ -70,6 +70,13 @@ export interface LoginParams {
   password: string
 }
 
+/** 注册参数 */
+export interface RegisterParams {
+  username: string
+  password: string
+  nickname?: string
+}
+
 /** 登录结果（对接真实后端时 token 由后端下发） */
 export interface LoginResult {
   token: string

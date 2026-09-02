@@ -27,3 +27,12 @@ export function updateOrderStatus(id: number, status: string): Promise<Order> {
     data: { status }
   })
 }
+
+/** 我的订单（按用户名查询） */
+export function getMyOrders(username: string): Promise<Order[]> {
+  return request<Order[]>({
+    url: '/orders/my',
+    method: 'get',
+    params: { username }
+  })
+}

@@ -39,6 +39,9 @@
             </span>
             <template #dropdown>
               <el-dropdown-menu>
+                <el-dropdown-item command="profile">
+                  <el-icon><User /></el-icon> 个人中心
+                </el-dropdown-item>
                 <el-dropdown-item v-if="userStore.role === 'admin'" command="admin">
                   进入后台
                 </el-dropdown-item>
@@ -46,7 +49,10 @@
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <router-link v-else to="/login" class="login-btn">登录</router-link>
+          <template v-else>
+            <router-link to="/login" class="login-btn">登录</router-link>
+            <router-link to="/register" class="login-btn register-btn">注册</router-link>
+          </template>
         </div>
       </div>
     </header>
@@ -78,7 +84,9 @@ function handleSearch() {
 
 /** 下拉菜单命令 */
 function handleCommand(command: string) {
-  if (command === 'admin') {
+  if (command === 'profile') {
+    router.push('/profile')
+  } else if (command === 'admin') {
     router.push('/admin')
   } else if (command === 'logout') {
     userStore.logout()
@@ -170,6 +178,9 @@ function handleCommand(command: string) {
 .login-btn {
   color: #409eff;
   font-weight: bold;
+}
+.register-btn {
+  color: #6366f1;
 }
 .main {
   flex: 1;

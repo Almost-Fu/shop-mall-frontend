@@ -23,6 +23,12 @@ const router = createRouter({
       meta: { title: '登录' }
     },
     {
+      path: '/register',
+      name: 'Register',
+      component: () => import('@/views/Register.vue'),
+      meta: { title: '注册' }
+    },
+    {
       path: '/',
       component: () => import('@/layouts/ShopLayout.vue'),
       children: [
@@ -49,6 +55,12 @@ const router = createRouter({
           name: 'Cart',
           component: () => import('@/views/shop/Cart.vue'),
           meta: { title: '购物车', requiresAuth: true }
+        },
+        {
+          path: 'profile',
+          name: 'Profile',
+          component: () => import('@/views/shop/Profile.vue'),
+          meta: { title: '个人中心', requiresAuth: true }
         }
       ]
     },
