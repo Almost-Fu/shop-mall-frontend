@@ -9,6 +9,20 @@
       </el-button>
     </div>
 
+    <!-- 后端加载提示（免费实例休眠/冷启动时显示） -->
+    <div v-if="showTip" class="backend-tip">
+      <el-alert type="warning" :closable="false" show-icon>
+        <template #title>后端服务启动中，首次加载可能需要 30~60 秒</template>
+        <p>
+          免费云服务空闲后会进入休眠，第一次打开需要等后端启动完成后才有数据。
+          请点击下方按钮重试，或稍等片刻后刷新页面。
+        </p>
+        <el-button type="primary" size="small" :loading="loading" @click="loadData">
+          重新加载
+        </el-button>
+      </el-alert>
+    </div>
+
     <!-- 分类快捷入口 -->
     <div class="categories container">
       <div
@@ -41,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getProductList, getCategories } from '@/api/goods'
 import type { Product, Category } from '@/types'
@@ -50,15 +64,39 @@ import ProductCard from '@/components/ProductCard.vue'
 const router = useRouter()
 const products = ref<Product[]>([])
 const categories = ref<Category[]>([])
+const loading = ref(false)
+const loadError = ref(false)
+const loaded = ref(false)
 
-onMounted(async () => {
-  const [productData, categoryData] = await Promise.all([
-    getProductList({ page: 1, pageSize: 6 }),
-    getCategories()
-  ])
-  products.value = productData.list
-  categories.value = categoryData
-})
+onMounted(loadData)
+
+async function loadData() {
+  loading.value = true
+  loadError.value = false
+  try {
+    const [productData, categoryData] = await Promise.all([
+      getProductList({ page: 1, pageSize: 6 }),
+      getCategories()
+    ])
+    products.value = productData.list
+    categories.value = categoryData
+  } catch {
+    // 后端可能处于休眠冷启动，标记为错误并提示
+    loadError.value = true
+    products.value = []
+    categories.value = []
+  } finally {
+    loading.value = false
+    loaded.value = true
+  }
+}
+
+// 提示条件：请求失败，或加载完成但数据为空（后端可能还没就绪）
+const showTip = computed(
+  () =>
+    loadError.value ||
+    (loaded.value && products.value.length === 0 && categories.value.length === 0)
+)
 
 function goCategory(id: number) {
   router.push({ path: '/goods', query: { categoryId: id } })
@@ -102,6 +140,16 @@ function goCategory(id: number) {
   opacity: 0.92;
   margin-bottom: 28px;
   font-size: 16px;
+}
+.backend-tip {
+  max-width: 1200px;
+  margin: 20px auto 0;
+  padding: 0 16px;
+}
+.backend-tip p {
+  margin: 6px 0 12px;
+  font-size: 14px;
+  color: #8a6d3b;
 }
 .categories {
   display: flex;
