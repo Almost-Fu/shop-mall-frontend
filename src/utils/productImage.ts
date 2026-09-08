@@ -2,9 +2,9 @@
  * 商品封面图片解析工具
  * =====================
  * 统一"商品封面"图源策略，彻底弃用 emoji 大字当封面：
- *   1. 商品自带 image（后端下发的 http(s)/data: URL）→ 优先使用
- *   2. 无 image / 加载失败 → 按 cover emoji 或商品名匹配 public/images 本地图
- *   3. 仍无匹配 → 返回 null，由组件展示文字占位（不显示 emoji）
+ *   1. 商品自带 image（http(s)/data URL，或 /images/xxx.jpg 相对路径）→ 优先使用
+ *   2. 无 image / 加载失败 → 按 cover（兼容旧 emoji 数据）或商品名匹配 public/images 本地图
+ *   3. 仍无匹配 → 返回 null，由组件展示商品名首字占位（不显示 emoji）
  *
  * 本地图库来源：D:\images 的商品实拍图，部署时需连同 public/ 一起发布。
  * 若有新增商品类型，在 public/images 放同名图片并补一条规则即可。
@@ -17,7 +17,7 @@ export interface CoverSource {
   image?: string | null
 }
 
-/** cover emoji → public/images 下的图片文件名 */
+/** cover emoji → public/images 下的图片文件名（兼容历史数据；新数据 cover 存商品名首字） */
 const COVER_IMAGE_MAP: Record<string, string> = {
   '📱': '智能手机.jpg',
   '🎧': '蓝牙耳机.jpg',
@@ -53,8 +53,23 @@ function isRemoteImage(url: string): boolean {
 }
 
 /**
+ * 计算单张图片可用的 src：
+ * - http(s)://、data: 原样返回
+ * - /images/xxx.jpg 或 images/xxx.jpg 等相对路径 → 拼上 BASE_URL（适配子目录部署）
+ * - 空 → null
+ */
+export function coverImageUrl(image?: string | null): string | null {
+  const v = image?.trim()
+  if (!v) return null
+  if (isRemoteImage(v)) return v
+  const base = import.meta.env.BASE_URL
+  if (v.startsWith(base)) return v
+  return base + v.replace(/^\/+/, '')
+}
+
+/**
  * 从本地图库匹配图片地址。
- * 命中顺序：cover emoji 精确匹配 → 商品名关键词匹配；未命中返回 null。
+ * 命中顺序：cover（兼容旧 emoji）精确匹配 → 商品名关键词匹配；未命中返回 null。
  */
 export function productLocalImage(product: CoverSource): string | null {
   const coverKey = product.cover?.trim() || ''
@@ -70,10 +85,12 @@ export function productLocalImage(product: CoverSource): string | null {
 }
 
 /**
- * 解析商品最终封面地址：商品 image URL 优先，其次本地图库，最后 null（无图）。
+ * 解析商品最终封面地址：
+ * 商品 image URL（远程或本地路径）优先，其次本地图库，最后 null（组件展示首字占位）。
  */
 export function resolveProductImage(product: CoverSource): string | null {
-  const image = product.image?.trim()
-  if (image && isRemoteImage(image)) return image
+  const image = coverImageUrl(product.image)
+  if (image) return image
   return productLocalImage(product)
 }
+
