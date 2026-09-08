@@ -25,22 +25,23 @@
       </el-col>
     </el-row>
 
-    <!-- 分页 -->
-    <div class="pagination">
+    <!-- 分页：右侧显示总页数，避免与商品条数混淆 -->
+    <div v-if="total > 0" class="pagination">
       <el-pagination
         v-model:current-page="page"
-        :page-size="pageSize"
-        :total="total"
-        layout="prev, pager, next, total"
+        :page-count="pageCount"
+        layout="prev, pager, next, slot"
         background
         @current-change="loadData"
-      />
+      >
+        <span class="page-total">共 {{ pageCount }} 页</span>
+      </el-pagination>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { getProductList, getCategories } from '@/api/goods'
 import type { Product, Category } from '@/types'
@@ -53,6 +54,8 @@ const categories = ref<Category[]>([])
 const page = ref(1)
 const pageSize = 8
 const total = ref(0)
+/** 总页数：由商品总条数 ÷ 每页条数得出 */
+const pageCount = computed(() => Math.max(1, Math.ceil(total.value / pageSize)))
 const loading = ref(false)
 const categoryId = ref(0)
 
@@ -99,5 +102,12 @@ function handleSearch() {
   margin-top: 20px;
   display: flex;
   justify-content: center;
+}
+.page-total {
+  font-size: 13px;
+  color: #98a2b3;
+  margin-left: 12px;
+  line-height: 32px;
+  user-select: none;
 }
 </style>
