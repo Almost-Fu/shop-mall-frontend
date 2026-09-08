@@ -27,7 +27,9 @@
       <el-table-column label="商品">
         <template #default="{ row }">
           <div class="goods-cell">
-            <span class="cover">{{ row.cover }}</span>
+            <div class="goods-thumb">
+              <ProductCoverImg :product="row" size="sm" />
+            </div>
             <span>{{ row.name }}</span>
           </div>
         </template>
@@ -74,7 +76,7 @@
           <el-input-number v-model="form.originalPrice" :min="0" :precision="2" />
         </el-form-item>
         <el-form-item label="封面">
-          <el-input v-model="form.cover" placeholder="输入 emoji，如 📦（图片加载失败时显示）" />
+          <el-input v-model="form.cover" placeholder="无图时的兜底标识，一般保持默认（封面显示以图片URL/本地图为准）" />
         </el-form-item>
         <el-form-item label="图片URL" required>
           <el-input v-model="form.image" placeholder="https://...（商品图片地址，必填）" />
@@ -108,6 +110,7 @@ import {
   deleteProduct
 } from '@/api/goods'
 import type { Product, Category, ProductForm } from '@/types'
+import ProductCoverImg from '@/components/ProductCoverImg.vue'
 
 const list = ref<Product[]>([])
 const categories = ref<Category[]>([])
@@ -241,8 +244,13 @@ async function handleDelete(row: Product) {
   align-items: center;
   gap: 10px;
 }
-.cover {
-  font-size: 24px;
+.goods-thumb {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f1f2f6;
 }
 .pagination {
   margin-top: 16px;

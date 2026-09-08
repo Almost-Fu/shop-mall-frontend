@@ -3,13 +3,7 @@
     <el-card v-if="product" class="card" shadow="never">
       <div class="detail-body">
         <div class="cover" :class="coverClass">
-          <img
-            v-if="product.image"
-            :src="product.image"
-            :alt="product.name"
-            class="cover-img"
-          />
-          <span v-else class="emoji">{{ product.cover }}</span>
+          <ProductCoverImg :product="product" size="lg" />
         </div>
         <div class="info">
           <h2 class="name">{{ product.name }}</h2>
@@ -46,6 +40,7 @@ import { ElMessage } from 'element-plus'
 import { getProductDetail } from '@/api/goods'
 import { useCartStore } from '@/stores/cart'
 import type { Product } from '@/types'
+import ProductCoverImg from '@/components/ProductCoverImg.vue'
 
 const route = useRoute()
 const cartStore = useCartStore()
@@ -88,15 +83,6 @@ function addCart() {
   border-radius: 14px;
   box-shadow: var(--card-shadow);
   overflow: hidden;
-}
-.cover-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.emoji {
-  font-size: 120px;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.2));
 }
 .info {
   flex: 1;

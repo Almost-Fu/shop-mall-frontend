@@ -46,6 +46,7 @@ export interface CartItem {
   productId: number
   name: string
   cover: string
+  image?: string
   price: number
   count: number
   stock: number

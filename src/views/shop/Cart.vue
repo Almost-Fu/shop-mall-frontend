@@ -17,8 +17,9 @@
         <el-table-column label="商品">
           <template #default="{ row }">
             <div class="goods-cell">
-              <img v-if="row.image" :src="row.image" :alt="row.name" class="cover-img" />
-              <span v-else class="cover">{{ row.cover }}</span>
+              <div class="goods-thumb">
+                <ProductCoverImg :product="row" size="sm" />
+              </div>
               <span>{{ row.name }}</span>
             </div>
           </template>
@@ -74,6 +75,7 @@ import { ElMessage } from 'element-plus'
 import { useCartStore } from '@/stores/cart'
 import { useUserStore } from '@/stores/user'
 import { createOrder } from '@/api/order'
+import ProductCoverImg from '@/components/ProductCoverImg.vue'
 
 const cartStore = useCartStore()
 const userStore = useUserStore()
@@ -122,21 +124,13 @@ async function checkout() {
   align-items: center;
   gap: 10px;
 }
-.cover {
-  font-size: 26px;
+.goods-thumb {
   width: 44px;
   height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: none;
+  border-radius: 10px;
+  overflow: hidden;
   background: #f1f2f6;
-  border-radius: 10px;
-}
-.cover-img {
-  width: 44px;
-  height: 44px;
-  object-fit: cover;
-  border-radius: 10px;
 }
 .footer {
   margin-top: 20px;

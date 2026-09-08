@@ -1,13 +1,7 @@
 <template>
   <div class="product-card" @click="goDetail">
     <div class="cover" :class="coverClass">
-      <img
-        v-if="product.image"
-        :src="product.image"
-        :alt="product.name"
-        class="cover-img"
-      />
-      <span v-else class="emoji">{{ product.cover }}</span>
+      <ProductCoverImg :product="product" />
       <span v-if="product.originalPrice" class="badge">特惠</span>
     </div>
     <div class="info">
@@ -25,6 +19,7 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import type { Product } from '@/types'
+import ProductCoverImg from '@/components/ProductCoverImg.vue'
 
 const props = defineProps<{
   product: Product
@@ -61,22 +56,8 @@ function goDetail() {
   position: relative;
   overflow: hidden;
 }
-.cover-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.25s ease;
-}
-.product-card:hover .cover-img {
-  transform: scale(1.08);
-}
-.emoji {
-  font-size: 72px;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.2));
-  transition: transform 0.25s ease;
-}
-.product-card:hover .emoji {
-  transform: scale(1.12);
+.product-card:hover .cover > :deep(.product-cover-img) {
+  transform: scale(1.06);
 }
 .badge {
   position: absolute;
